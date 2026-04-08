@@ -1,0 +1,38 @@
+# requirements.txt
+# ---------------------------------------------------------------
+# Install with:  pip install -r requirements.txt
+#
+# TensorFlow is only needed for TFLite export.
+# If you only want to train and run video inference, you can
+# skip it — everything else will still work.
+# ---------------------------------------------------------------
+
+# Core ML
+torch>=2.1.0
+torchvision>=0.16.0
+
+# Computer vision
+opencv-python>=4.8.0
+mediapipe>=0.10.0
+Pillow>=10.0.0
+
+# Data
+pandas>=2.0.0
+scikit-learn>=1.3.0
+scipy>=1.11.0
+numpy>=1.24.0
+
+# Visualisation
+matplotlib>=3.7.0
+
+# ONNX export
+onnx>=1.15.0
+onnxsim>=0.4.35
+onnxscript>=0.1.0
+
+# TF export (optional — comment out if not exporting to TFLite)
+tensorflow>=2.14.0
+onnx2tf>=1.17.0
+
+# Kaggle dataset download (only needed on Colab/Kaggle)
+kagglehub>=0.2.0
