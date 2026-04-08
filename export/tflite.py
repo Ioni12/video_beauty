@@ -188,14 +188,22 @@ def verify_and_print_spec(tflite_path: str) -> None:
     The spec tells you exactly how to pre-process frames on the
     Android side before calling the model.
     """
-    import tensorflow as tf
+    # Prefer the newer ai_edge_litert package; fall back to tf.lite
+    try:
+        from ai_edge_litert.interpreter import Interpreter
+        interp = Interpreter(model_path=tflite_path)
+    except ImportError:
+        import tensorflow as tf
+        interp = tf.lite.Interpreter(model_path=tflite_path)
 
-    interp = tf.lite.Interpreter(model_path=tflite_path)
     interp.allocate_tensors()
     inp_d = interp.get_input_details()[0]
     out_d = interp.get_output_details()[0]
 
-    dummy = np.random.rand(1, IMG_SIZE, IMG_SIZE, 3).astype(np.float32)
+    # Build dummy input matching the model's actual expected shape
+    # (could be NHWC or NCHW depending on the onnx2tf conversion)
+    inp_shape = inp_d["shape"].tolist()
+    dummy = np.random.rand(*inp_shape).astype(np.float32)
     interp.set_tensor(inp_d["index"], dummy)
     interp.invoke()
     print(f"TFLite verified.  Dummy output: {interp.get_tensor(out_d['index'])}")
