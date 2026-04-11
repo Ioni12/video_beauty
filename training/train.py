@@ -10,6 +10,7 @@ import os
 import numpy as np
 import torch
 import torch.nn as nn
+import cv2
 import matplotlib.pyplot as plt
 from scipy.stats import pearsonr
 
@@ -21,6 +22,7 @@ from model import (
     save_best_model,
     load_latest_checkpoint,
     load_best_model,
+    GradCAM,
 )
 
 
