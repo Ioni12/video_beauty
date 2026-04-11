@@ -7,3 +7,4 @@ from model.checkpoints import (
     load_best_model,
     best_model_path,
 )
+from model.gradcam import GradCAM
