@@ -31,14 +31,8 @@ onnxsim>=0.4.35
 onnxscript>=0.1.0
 
 # TF export (optional — comment out if not exporting to TFLite)
-# onnx2tf has many undeclared dependencies — install all at once
 tensorflow>=2.14.0
 onnx2tf>=1.17.0
-onnx-graphsurgeon
-ai-edge-litert
-sng4onnx
-onnxsim
-tf_keras
 
 # Kaggle dataset download (only needed on Colab/Kaggle)
 kagglehub>=0.2.0
