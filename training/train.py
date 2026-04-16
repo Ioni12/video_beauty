@@ -22,7 +22,6 @@ from model import (
     save_best_model,
     load_latest_checkpoint,
     load_best_model,
-    GradCAM,
 )
 
 
@@ -185,22 +184,6 @@ def evaluate(model: nn.Module, test_loader) -> dict:
     _plot_loss_curves_from_checkpoint()
     _plot_scatter(preds_all, targets_all, mae, r)
     
-    sample_img, _ = next(iter(test_loader))
-    sample_img = sample_img[:1].to(DEVICE).requires_grad_(True)
-
-    cam     = GradCAM(model)
-    heatmap = cam.generate(sample_img)
-    scores  = cam.region_scores(heatmap)
-    overlay = cam.overlay(sample_img, heatmap)
-
-    print("\nRegion importance:")
-    for region, score in sorted(scores.items(), key=lambda x: -x[1]):
-        print(f"  {region:<8} {score:.4f}")
-
-    out = os.path.join(EXPORT_DIR, "gradcam.png")
-    cv2.imwrite(out, overlay)
-    print(f"Grad-CAM saved → {out}")
-
     return dict(mae=mae, pearson_r=r, pearson_p=pv,
                 preds=preds_all, targets=targets_all)
 
